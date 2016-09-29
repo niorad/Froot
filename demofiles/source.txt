@@ -1,3 +1,6 @@
+
+
+
 This is a file to demonstrate Froot.
 Let's include the snippet
 ---
@@ -5,6 +8,7 @@ Let's include the snippet
 >>>"./includes/snippet.txt"
 ---
 ---
+
 Let's do it again:
 ---
 ---

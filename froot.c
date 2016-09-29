@@ -42,37 +42,35 @@ void outputFile(char *filePath) {
     char lineBuffer[500] = "";
 
     // for each line of the sourceFile, repeat
-    while( fscanf(sourceFile, "%500[^\n]\n", lineBuffer) == 1 ) {
-
+    while( fgets(lineBuffer, sizeof lineBuffer, sourceFile) ) {
+      
+      // Reset to original path
       char *pathToActiveFile = dirname(filePath);
 
-      // if line contains the string ">>>", this is an include-line
-      if(strstr(lineBuffer, ">>>")) {
+      // check if the current line is not empty
+      if( sscanf(lineBuffer, "%500[^\n]\n", lineBuffer) ) {
 
+        // if line contains the string ">>>", this is an include-line
+        if(strstr(lineBuffer, ">>>")) {
 
-        // placeholder for the file path, which will now be read from the line
-        char *relativePathToIncludedFile;
-        // parse the full path out of the quotation-marks on the include-line
-        relativePathToIncludedFile = strtok(lineBuffer, "\"");
-        relativePathToIncludedFile = strtok(NULL, "\"");
+          // placeholder for the file path, which will now be read from the line
+          char *relativePathToIncludedFile;
+          // parse the full path out of the quotation-marks on the include-line
+          relativePathToIncludedFile = strtok(lineBuffer, "\"");
+          relativePathToIncludedFile = strtok(NULL, "\"");
 
+          char fullPathToIncludedFile[100] = "";
+          strcat(fullPathToIncludedFile, pathToActiveFile);
+          strcat(fullPathToIncludedFile, "/");
+          strcat(fullPathToIncludedFile, relativePathToIncludedFile);
 
+          //call self-function recursively and do same on the included file
+          outputFile(fullPathToIncludedFile);
 
-        char fullPathToIncludedFile[100] = "";
-
-        strcat(fullPathToIncludedFile, pathToActiveFile);
-        strcat(fullPathToIncludedFile, "/");
-        strcat(fullPathToIncludedFile, relativePathToIncludedFile);
-
-
-
-        //call self-function recursively and do same on the included file
-        outputFile(fullPathToIncludedFile);
-
-      } else {
-        // if it's not an include-line, just print out the line to stdout
-        printf("%s\n", lineBuffer);
-
+        } else {
+          // if it's not an include-line, just print out the line to stdout
+          printf("%s\n", lineBuffer);
+        }
       }
     }
 
