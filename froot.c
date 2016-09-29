@@ -32,28 +32,28 @@ void outputFile(char *filePath) {
 
   if(sourceFile == NULL) {
 
-    printf("         Couldn't open file %s\n", filePath);
+    printf("Couldn't open file %s\n", filePath);
     return;
 
   } else {
 
 
     // placeholder for each line being iterated over
-    char line[500] = "";
+    char lineBuffer[500] = "";
 
     // for each line of the sourceFile, repeat
-    while( fscanf(sourceFile, "%500[^\n]\n", line) == 1 ) {
+    while( fscanf(sourceFile, "%500[^\n]\n", lineBuffer) == 1 ) {
 
       char *pathToActiveFile = dirname(filePath);
 
       // if line contains the string ">>>", this is an include-line
-      if(strstr(line, ">>>")) {
+      if(strstr(lineBuffer, ">>>")) {
 
 
         // placeholder for the file path, which will now be read from the line
         char *relativePathToIncludedFile;
         // parse the full path out of the quotation-marks on the include-line
-        relativePathToIncludedFile = strtok(line, "\"");
+        relativePathToIncludedFile = strtok(lineBuffer, "\"");
         relativePathToIncludedFile = strtok(NULL, "\"");
 
 
@@ -71,7 +71,7 @@ void outputFile(char *filePath) {
 
       } else {
         // if it's not an include-line, just print out the line to stdout
-        printf("%s\n", line);
+        printf("%s\n", lineBuffer);
 
       }
     }
