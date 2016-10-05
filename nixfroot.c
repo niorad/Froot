@@ -1,12 +1,3 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <libgen.h>
-
-// (TODO Antonio): Investigate why it doesn't work when first line is blank
-// http://stackoverflow.com/questions/16556894/use-fscanf-to-read-from-given-line/16556946#16556946
-
-
 /**
  *
  * This program parses lines from stdio.
@@ -23,8 +14,14 @@
  */
 
 
-void outputFile(char *filePath) {
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <libgen.h>
 
+
+
+void outputFile(char *filePath) {
 
   // open file with fopen(), read only
   FILE *sourceFile;
