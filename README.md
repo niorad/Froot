@@ -38,23 +38,10 @@ gcc -froot_macos_linux.c -o froot
 ./froot ./relative/path/to/sourcefile.html
 ```
 
-### To save the output in a file
-```
-./froot ./relative/path/to/sourcefile.html > ./path/to/targetfile.html
-```
-
 ## Usage on Windows
 
-### To see the output in the terminal
 ```
 froot.exe relative\path\to\sourcefile.html
 ```
-
-### To save the output in a file
-```
-froot.exe relative\path\to\sourcefile.html > path\to\targetfile.html
-```
-
-
 
 
