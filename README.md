@@ -9,6 +9,8 @@ Referencing a file works like this:
 >>>"./includes/snippets/header.html"
 >>>"includes/snippets/header.html"
 >>>"../snippets/header.html"
+<!-- >>>"includes/header.html" -->
+// >>>"modules/slider.js"
 ```
 
 ## Functions
