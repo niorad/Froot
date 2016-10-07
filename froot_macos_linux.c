@@ -1,5 +1,4 @@
 /**
- * WINDOWS VERSION
  *
  * This program parses lines from stdio.
  * It will stdout every line of a file.
@@ -18,18 +17,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <libgen.h>
 
 
 
 void outputFile(char *filePath) {
-
-
-  char path_buffer[_MAX_PATH];
-  char drive[_MAX_DRIVE];
-  char dir[_MAX_DIR];
-  char fname[_MAX_FNAME];
-  char ext[_MAX_EXT];
-
 
   // open file with fopen(), read only
   FILE *sourceFile;
@@ -48,10 +40,9 @@ void outputFile(char *filePath) {
 
     // for each line of the sourceFile, repeat
     while( fgets(lineBuffer, sizeof lineBuffer, sourceFile) ) {
-      
+
       // Reset to original path
-	  char pathToActiveFile[500];
-	  _splitpath(filePath, NULL, pathToActiveFile, NULL, NULL, NULL);
+      char *pathToActiveFile = dirname(filePath);
 
       // check if the current line is not empty
       if( sscanf(lineBuffer, "%500[^\n]\n", lineBuffer) ) {
@@ -65,9 +56,14 @@ void outputFile(char *filePath) {
           relativePathToIncludedFile = strtok(lineBuffer, "\"");
           relativePathToIncludedFile = strtok(NULL, "\"");
 
-          char fullPathToIncludedFile[100] = "";
+          // Need to copy filePath, since dirname() will destroy it
+          char backupFilePath[500];
+          strcpy(backupFilePath, filePath);
+          char *pathToActiveFile = dirname(backupFilePath);
+
+          char fullPathToIncludedFile[500] = "";
           strcat(fullPathToIncludedFile, pathToActiveFile);
-          strcat(fullPathToIncludedFile, "");
+          strcat(fullPathToIncludedFile, "/");
           strcat(fullPathToIncludedFile, relativePathToIncludedFile);
 
           //call self-function recursively and do same on the included file
@@ -90,7 +86,6 @@ int main(int argc, char * argv[]) {
 
   if(argc < 2) {
     printf("Some arguments may be missing!");
-    return 0;
   }
   outputFile(argv[1]);
   return 0;
