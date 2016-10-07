@@ -29,7 +29,7 @@ void outputFile(char *filePath) {
 
   if(sourceFile == NULL) {
 
-    printf("Couldn't open file %s\n", filePath);
+    printf("ERROR: Couldn't open file %s\n", filePath);
     return;
 
   } else {
@@ -41,14 +41,17 @@ void outputFile(char *filePath) {
     // for each line of the sourceFile, repeat
     while( fgets(lineBuffer, sizeof lineBuffer, sourceFile) ) {
 
-      // Reset to original path
-      char *pathToActiveFile = dirname(filePath);
-
       // check if the current line is not empty
       if( sscanf(lineBuffer, "%500[^\n]\n", lineBuffer) ) {
 
         // if line contains the string ">>>", this is an include-line
         if(strstr(lineBuffer, ">>>")) {
+
+          // catch having >>> but not " "
+          if(strstr(lineBuffer, "\"")) {} else {
+            printf("ERROR: There are >>> but no quotation-marks in %s\n", filePath);
+            return;
+          }
 
           // placeholder for the file path, which will now be read from the line
           char *relativePathToIncludedFile;

@@ -59,6 +59,12 @@ void outputFile(char *filePath) {
         // if line contains the string ">>>", this is an include-line
         if(strstr(lineBuffer, ">>>")) {
 
+          // catch having >>> but not " "
+          if(strstr(lineBuffer, "\"")) {} else {
+            printf("ERROR: There are >>> but no quotation-marks in %s\n", filePath);
+            return;
+          }
+
           // placeholder for the file path, which will now be read from the line
           char *relativePathToIncludedFile;
           // parse the full path out of the quotation-marks on the include-line

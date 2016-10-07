@@ -1,0 +1,16 @@
+Testing Froot
+....
+using "./includes/included.txt"
+>>>"./includes/included.txt"
+....
+using "./includes/mixins/mixin.txt"
+>>>"./includes/mixins/mixin.txt"
+....
+testing relative paths "./includes/mixins/partials/relative.txt"
+>>>"./includes/mixins/partials/relative.txt"
+....
+testing syntax using "includes/included.txt"
+>>>"includes/included.txt"
+....
+testing syntax using ./includes/included.txt (should throw error)
+>>>./includes/included.txt'
